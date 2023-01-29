@@ -1,0 +1,32 @@
+h1 {
+    text-align  : center;
+}
+/* This container hold the Table and Canvas */
+.center-container {
+/* Setting container position and width*/
+    width:608px;
+    margin-inline: auto;
+    margin-top: 50px;
+}
+
+table {
+    /* Collapsing border to one and hidding outer borders */
+    border-collapse: collapse;
+    border-style: hidden;
+}
+
+td {
+    cursor: pointer;
+    border: 4px solid rgba(54, 19, 121, 0.8);
+    /* Removing default Padding */
+    padding: 0;
+    width: 200px;
+    height: 200px;
+}
+
+canvas {
+    position:absolute;
+    z-index: 10;
+    /* This makes our canvas invisible */
+    pointer-events: none;
+}
