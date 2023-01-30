@@ -5,7 +5,7 @@ h1 {
 .center-container {
 /* Setting container position and width*/
     width:608px;
-    margin-inline: auto;
+    margin: 0 auto;
     margin-top: 50px;
 }
 

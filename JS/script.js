@@ -38,7 +38,7 @@ function placeXO(squareNumber) {
             // We disable click for computers choice
             disableClick()
             // This function waits for a second before placing image and enables click
-            setTimeout(function () {computersTurn();}, 1000);
+            setTimeout(function () { computersTurn(); }, 1000);
         }
         // Returning true is needed for our computerTurn() function to Work.
         return true;
@@ -85,7 +85,6 @@ function checkWinConditions() {
     else if (arrayIncludes("6X", "4X", "2X")) {drawWinLine(100, 508, 510, 90);}
     // X 0, 4, 8 condition.
     else if (arrayIncludes("0X", "4X", "8X")) {drawWinLine(100, 100, 520, 520);}
-
     // O 0, 1, 2 condition.
     else if (arrayIncludes("0O", "1O", "2O")) {drawWinLine(50, 100, 558, 100);}
     // O 3, 4, 5 condition.
@@ -152,10 +151,69 @@ function drawWinLine(coordX1, coordY1, coordX2, coordY2) {
     // Temporary X and Y data we update in animation loop
     x = x1,
     y = y1;
-}
 
 // This function interacts with Canvas
 function animateLineDrawing() {
     //This is loop so when game ends it restarts
     const animationLoop = requestAnimationFrame(animateLineDrawing);
+    // This will clear content from the last loop iteration
+    c.clearRect(0, 0, 608, 608);
+    // Starts new path
+    c.beginPath();
+    // Here we move to start of the line
+    c.moveTo(x1, y1);
+    // This is the end of the line
+    c.lineTo(x, y);
+    c.lineWidth = 10;
+    c.strokeStyle = "rgba(70, 255, 33, .8"; // Line color
+    // This draws the laid out points
+    c.stroke();
+    // Here we check for endpoint
+    if(x <= x2 && y1 <= y2) {
+        // Add 10 to previous x end point
+        if (x < x2) {x += 10;}
+        // Add 10 to previous x end point
+        if (y < y2) {y += 10;}
+        // This condition cancels animation when endpoint is reached
+        if (x >= x2 && y >= y2) {cancelAnimationFrame(animationLoop);}
+    }
+    //This condition is for 6, 4, 2 win condition
+    if (x1 <= x2 && y >= y2) {
+        if(x < x2) {x += 10;}
+        if (y > y2) {y-= 10;}
+        if (x >= x2 && y <= y2) {cancelAnimationFrame(animationLoop);}
+    }
+}
+
+// This function clears our canvas after our win line is drawn
+function clear() {
+    // Here we start animation loop
+    const animationLoop = requestAnimationFrame(clear);
+    // This line clears our canvas
+    c.clearRect(0, 0, 608, 608)
+    // Here we stop animation loop
+    cancelAnimationFrame(animationLoop);
+}
+
+// This line disallows clicking while the win sound is playing
+disableClick();
+// This line plays the win sounds
+audio('./Media/winGame.mp3');
+// This line calls our main animation loop
+animateLineDrawing();
+// This line waits 1 second
+// Then clears canvas resets the game and allows clicking again
+setTimeout(function () { clear(); resetGame();}, 1000);
+}
+
+// Here we reset the game in case of win
+function resetGame() {
+    for (let i = 0; i < 9; i++) {
+        // This variable gets html element of i
+        let square = document.getElementById(String(i))
+        // This removes our elements backgroundImage
+        square.style.backgroundImage= "";
+    }
+    // This resets array to start a new game
+    selectedSquares = [];
 }
