@@ -13,7 +13,7 @@ function placeXO(squareNumber) {
         let select = document.getElementById(squareNumber)
         // This condition check which players turn it is and we'll place X.png for X
         if (activePlayer === "X") {
-            select.style.backgroundImage ="url('Images/x.png')";
+            select.style.backgroundImage ="url('Images/XV2.png')";
         }
         // o.png for O
         else {
@@ -32,7 +32,7 @@ function placeXO(squareNumber) {
         }
 
         // This function plays found when someone makes their move
-        audio("./Media/place.mp3")
+        audio("./Media/object_placed.wav")
         // Here we check if it is computers turn
         if (activePlayer === "O") {
             // We disable click for computers choice
@@ -104,7 +104,7 @@ function checkWinConditions() {
     // If all 9 squares are use and no one Won this code executes
     else if (selectedSquares.length >= 9) {
         // Tie sound plays
-        audio("./Media/tie.mp3");
+        audio("./Media/Draw.mp3");
         // This function sets a one second timer before the game gets reset
         setTimeout(function () { resetGame();}, 1000)
     }
@@ -198,7 +198,7 @@ function clear() {
 // This line disallows clicking while the win sound is playing
 disableClick();
 // This line plays the win sounds
-audio('./Media/winGame.mp3');
+audio('./Media/win_melody.wav');
 // This line calls our main animation loop
 animateLineDrawing();
 // This line waits 1 second
